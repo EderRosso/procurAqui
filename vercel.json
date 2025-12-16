@@ -5,6 +5,10 @@
             "destination": "/obrigado.html"
         },
         {
+            "source": "/termos",
+            "destination": "/termos.html"
+        },
+        {
             "source": "/api/:match*",
             "destination": "/api/:match*"
         }

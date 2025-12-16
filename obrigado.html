@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,10 +17,12 @@
             align-items: center;
             justify-content: center;
         }
+
         .success-icon {
             font-size: 5rem;
             margin-bottom: 2rem;
         }
+
         .btn-home {
             margin-top: 2rem;
             display: inline-block;
@@ -32,6 +35,7 @@
         }
     </style>
 </head>
+
 <body>
     <header>
         <div class="container">
@@ -50,7 +54,7 @@
         <p style="margin-top: 1rem;">
             Você já pode gerar seus documentos <strong>Sem Marca D'água</strong> e com formatação Premium.
         </p>
-        
+
         <script>
             // Store premium status in localStorage just in case, though the main page checks backend/url params usually.
             // But since this is a redirect, we can send them back to home with a flag.
@@ -63,7 +67,12 @@
     <footer>
         <div class="container footer-content">
             <p>&copy; 2024 procurAqui. Todos os direitos reservados.</p>
+            <div>
+                <a href="/termos" style="color: inherit; margin-right: 1rem;">Termos de Uso</a>
+                <a href="/termos" style="color: inherit;">Privacidade</a>
+            </div>
         </div>
     </footer>
 </body>
+
 </html>
