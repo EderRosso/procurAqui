@@ -11,9 +11,8 @@ module.exports = async (req, res) => {
         const { templateType, customerName } = req.body;
         const token = process.env.PAGSEGURO_TOKEN;
         // Basic Environment Switch
-        // In production, use 'https://api.pagseguro.com/orders'
-        // In sandbox, use 'https://sandbox.api.pagseguro.com/orders'
-        // We'll default to sandbox for safety unless PAGSEGURO_ENV is 'production'
+        // In production, use 'https://api.pagseguro.com'
+        // In sandbox, use 'https://sandbox.api.pagseguro.com'
         const baseUrl = process.env.PAGSEGURO_ENV === 'production'
             ? 'https://api.pagseguro.com'
             : 'https://sandbox.api.pagseguro.com';
@@ -43,6 +42,8 @@ module.exports = async (req, res) => {
                     unit_amount: 490 // R$ 4,90 (in cents)
                 }
             ],
+            // For /checkouts, we can specify redirect_url directly
+            redirect_url: 'https://procuraqui.com/obrigado', // Or configured in dashboard
             notification_urls: [
                 // Use VERCEL_URL if available (Production/Preview), otherwise BASE_URL (Local)
                 process.env.VERCEL_URL
@@ -50,33 +51,33 @@ module.exports = async (req, res) => {
                     : (process.env.BASE_URL && process.env.BASE_URL.includes('localhost')
                         ? 'https://procuraqui.com/api/webhook?source=pagseguro' // Sandbox Dummy
                         : `${process.env.BASE_URL}/api/webhook?source=pagseguro`)
+            ],
+            payment_methods: [
+                { type: 'CREDIT_CARD' },
+                { type: 'BOLETO' },
+                { type: 'PIX' }
             ]
-            // For redirect, PagSeguro behavior is different from MP Preference.
-            // Orders API usually returns links.
         };
 
-        const response = await axios.post(`${baseUrl}/orders`, payload, {
+        // endpoint: /checkouts
+        const response = await axios.post(`${baseUrl}/checkouts`, payload, {
             headers: {
                 'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json',
-                'x-api-version': '4.0' // Recommended for V4
+                'x-api-version': '4.0'
             }
         });
 
-        // Extract payment link (if available) or return order details
-        // PagSeguro Orders response has 'links' array. Look for 'checkout' or 'pay'.
-        // Actually, for "Checkout Transparent" or "Redirect", it might be different.
-        // If we want a simple link like MP, we might look for keys in response.
-        // Assuming we want to return the whole response for the frontend to handle, or a specific link.
-
         const links = response.data.links || [];
-        const paymentLink = links.find(l => l.rel === 'pay' || l.rel === 'checkout');
+        // For /checkouts, the link is usually 'PAY' or 'SELF' or specifically classified.
+        // We look for any link that seems to be the redirect.
+        const paymentLink = links.find(l => l.rel === 'PAY' || l.rel === 'pay' || l.rel === 'SELF' || l.rel === 'self');
 
-        console.log("PagSeguro Response:", JSON.stringify(response.data, null, 2));
+        console.log("PagSeguro Checkout Response:", JSON.stringify(response.data, null, 2));
 
         return res.status(200).json({
             id: response.data.id,
-            init_point: paymentLink ? paymentLink.href : null, // Mapped to maintain compatibility with frontend if possible
+            init_point: paymentLink ? paymentLink.href : null,
             full_response: response.data
         });
 
