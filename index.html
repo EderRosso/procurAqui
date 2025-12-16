@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>procurAqui - Gerador de Procuração Online Grátis e Rápido</title>
+    <meta name="description" content="Gere sua procuração em PDF pronta para imprimir em segundos. Modelos de procuração geral, específica, previdenciária e mais. Rápido, fácil e sem cadastro.">
+    <link rel="stylesheet" href="css/style.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- jsPDF CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    
+    <!-- Favicon Mock -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚖️</text></svg>">
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav>
+                <a href="#" class="logo">
+                    ⚖️ procurAqui
+                </a>
+                <div class="nav-links">
+                    <a href="#como-funciona">Como Funciona</a>
+                    <a href="#modelos">Modelos</a>
+                    <a href="#premium">Premium</a>
+                </div>
+                <a href="#form-section" class="btn-primary">Criar Procuração Agora</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="container">
+            <h1>Gere sua Procuração em<br>Segundos, Pronto para Imprimir</h1>
+            <p>Esqueça a burocracia. Preencha os dados, escolha o modelo e baixe seu PDF formatado profissionalmente.</p>
+            <a href="#form-section" class="btn-primary">Começar Grátis</a>
+        </div>
+    </section>
+
+    <!-- Form Section -->
+    <section id="form-section" class="form-section">
+        <div class="container">
+            <div class="form-container">
+                <h2 style="text-align:center; margin-bottom: 2rem;">Preencha seus dados</h2>
+                <form id="procuracaoForm">
+                    <div class="form-grid">
+                        <div class="full-width">
+                            <h3 style="margin-bottom: 1rem; color: var(--primary-color);">Dados do Outorgante (Quem dá os poderes)</h3>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Nome Completo</label>
+                            <input type="text" name="nome" required placeholder="Ex: João da Silva">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Nacionalidade</label>
+                            <input type="text" name="nacionalidade" value="Brasileiro(a)">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Estado Civil</label>
+                            <select name="estado_civil">
+                                <option value="Solteiro(a)">Solteiro(a)</option>
+                                <option value="Casado(a)">Casado(a)</option>
+                                <option value="Divorciado(a)">Divorciado(a)</option>
+                                <option value="Viúvo(a)">Viúvo(a)</option>
+                                <option value="União Estável">União Estável</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Profissão</label>
+                            <input type="text" name="profissao" placeholder="Ex: Engenheiro">
+                        </div>
+
+                        <div class="form-group">
+                            <label>CPF</label>
+                            <input type="text" name="cpf" required placeholder="000.000.000-00">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>RG</label>
+                            <input type="text" name="rg" required placeholder="00.000.000-0">
+                        </div>
+                        
+                        <div class="full-width form-group">
+                            <label>Endereço Completo</label>
+                            <input type="text" name="endereco" required placeholder="Rua, Número, Bairro, Cidade - UF, CEP">
+                        </div>
+
+                        <!-- Outorgado -->
+                        <div class="full-width">
+                            <hr style="margin: 2rem 0; border: 0; border-top: 1px solid #eee;">
+                            <h3 style="margin-bottom: 1rem; color: var(--primary-color);">Dados do Procurador (Quem recebe os poderes)</h3>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Nome Completo do Procurador</label>
+                            <input type="text" name="nome_procurador" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Registro Profissional / OAB (Se houver)</label>
+                            <input type="text" name="oab" placeholder="Ex: 123456 (ou deixe em branco)">
+                        </div>
+
+                        <div class="form-group">
+                            <label>UF da OAB</label>
+                            <input type="text" name="oab_uf" placeholder="Ex: SP">
+                        </div>
+
+                        <div class="full-width form-group">
+                            <label>Endereço do Procurador</label>
+                            <input type="text" name="endereco_procurador" required>
+                        </div>
+
+                        <!-- Powers -->
+                         <div class="full-width">
+                            <hr style="margin: 2rem 0; border: 0; border-top: 1px solid #eee;">
+                            <h3 style="margin-bottom: 1rem; color: var(--primary-color);">Detalhes da Procuração</h3>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Tipo de Procuração</label>
+                            <select name="tipo" id="tipo">
+                                <option value="geral">Geral (Ad Judicia)</option>
+                                <option value="especifica">Fins Específicos</option>
+                                <option value="previdenciaria">Previdenciária (INSS)</option>
+                                <option value="administrativa">Administrativa</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Cidade da Assinatura</label>
+                            <input type="text" name="cidade" required placeholder="Ex: São Paulo">
+                        </div>
+
+                        <div class="full-width form-group">
+                            <label>Poderes Específicos (Opcional - Adicione detalhes)</label>
+                            <textarea name="poderes_especificos" rows="3" placeholder="Ex: Poderes par vender o imóvel matrícula X, ou retirar diploma na universidade Y..."></textarea>
+                        </div>
+
+                        <div class="full-width" style="text-align: center; margin-top: 1rem;">
+                            <button type="submit" id="generateBtn" class="btn-primary" style="width: 100%; font-size: 1.2rem;">BAIXAR PDF GRÁTIS</button>
+                            <p style="font-size: 0.8rem; margin-top: 0.5rem; color: #666;">Ao clicar, você concorda com nossos termos de uso.</p>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits -->
+    <section class="benefits" id="como-funciona">
+        <div class="container">
+            <h2 class="section-title">Por que usar o procurAqui?</h2>
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <div class="icon">🚀</div>
+                    <h3>Rápido</h3>
+                    <p>Menos de 2 minutos para preencher e baixar seu documento.</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="icon">🔒</div>
+                    <h3>Seguro</h3>
+                    <p>Seus dados são processados no seu navegador. Nada fica salvo em nossos servidores.</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="icon">📄</div>
+                    <h3>Profissional</h3>
+                    <p>Modelos jurídicos validados e formatados conforme as normas.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Premium -->
+    <section id="premium" class="premium-section">
+        <div class="container">
+            <h2>Precisa de algo mais profissional?</h2>
+            <p>Remova a marca d'água e tenha acesso a suporte prioritário.</p>
+            
+            <div class="premium-card">
+                <h3>Versão Profissional</h3>
+                <div class="price">R$ 4,90</div>
+                <ul style="list-style: none; margin-bottom: 2rem; text-align: left;">
+                    <li>✅ Sem marca d'água "Grátis"</li>
+                    <li>✅ Formatação Premium</li>
+                    <li>✅ Suporte Jurídico Básico</li>
+                </ul>
+                <button onclick="buyPremium()" class="btn-primary" style="background: var(--success); width: 100%;">Quero Sem Marca D'água</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container footer-content">
+            <p>&copy; 2024 procurAqui. Todos os direitos reservados.</p>
+            <div>
+                <a href="#" style="color: inherit; margin-right: 1rem;">Termos</a>
+                <a href="#" style="color: inherit;">Privacidade</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/templates.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
