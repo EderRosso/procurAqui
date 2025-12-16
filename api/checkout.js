@@ -43,7 +43,11 @@ module.exports = async (req, res) => {
                 }
             ],
             // For /checkouts, we can specify redirect_url directly
-            redirect_url: 'https://procuraqui.com/obrigado', // Or configured in dashboard
+            redirect_url: process.env.VERCEL_URL
+                ? `https://${process.env.VERCEL_URL}/obrigado`
+                : (process.env.BASE_URL && process.env.BASE_URL.includes('localhost')
+                    ? 'https://procuraqui.com/obrigado'
+                    : `${process.env.BASE_URL}/obrigado`),
             notification_urls: [
                 // Use VERCEL_URL if available (Production/Preview), otherwise BASE_URL (Local)
                 process.env.VERCEL_URL
