@@ -44,10 +44,12 @@ module.exports = async (req, res) => {
                 }
             ],
             notification_urls: [
-                // PagSeguro requires valid URL. If localhost, use a dummy one to pass Sandbox validation.
-                process.env.BASE_URL.includes('localhost')
-                    ? 'https://procuraqui.com/api/webhook?source=pagseguro'
-                    : `${process.env.BASE_URL}/api/webhook?source=pagseguro`
+                // Use VERCEL_URL if available (Production/Preview), otherwise BASE_URL (Local)
+                process.env.VERCEL_URL
+                    ? `https://${process.env.VERCEL_URL}/api/webhook?source=pagseguro`
+                    : (process.env.BASE_URL && process.env.BASE_URL.includes('localhost')
+                        ? 'https://procuraqui.com/api/webhook?source=pagseguro' // Sandbox Dummy
+                        : `${process.env.BASE_URL}/api/webhook?source=pagseguro`)
             ]
             // For redirect, PagSeguro behavior is different from MP Preference.
             // Orders API usually returns links.
