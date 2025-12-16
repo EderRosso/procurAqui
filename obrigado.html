@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pagamento Aprovado - procurAqui</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .success-page {
+            text-align: center;
+            padding: 4rem 2rem;
+            min-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .success-icon {
+            font-size: 5rem;
+            margin-bottom: 2rem;
+        }
+        .btn-home {
+            margin-top: 2rem;
+            display: inline-block;
+            background: var(--primary-color);
+            color: #fff;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <a href="/" class="logo">⚖️ procurAqui</a>
+            </nav>
+        </div>
+    </header>
+
+    <section class="success-page">
+        <div class="success-icon">🎉</div>
+        <h1>Pagamento Confirmado!</h1>
+        <p style="font-size: 1.2rem; margin-top: 1rem; color: #555; max-width: 600px;">
+            Obrigado por usar o procurAqui. Sua transação foi aprovada com sucesso.
+        </p>
+        <p style="margin-top: 1rem;">
+            Você já pode gerar seus documentos <strong>Sem Marca D'água</strong> e com formatação Premium.
+        </p>
+        
+        <script>
+            // Store premium status in localStorage just in case, though the main page checks backend/url params usually.
+            // But since this is a redirect, we can send them back to home with a flag.
+            localStorage.setItem('isPremium', 'true');
+        </script>
+
+        <a href="/?status=approved" class="btn-home">Criar Nova Procuração Premium</a>
+    </section>
+
+    <footer>
+        <div class="container footer-content">
+            <p>&copy; 2024 procurAqui. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+</body>
+</html>
