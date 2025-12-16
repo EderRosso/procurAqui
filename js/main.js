@@ -37,10 +37,25 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        // Generate PDF (Client side for Free, or call backend for Premium if implemented that way)
-        // Note: In this Secure Backend Demo, we still generate "Free" on client.
-        // Premium users can either get a key to unlock client-side or download from server.
-        await generatePDF(data, template);
+        // Generate PDF
+        // Helper to read file as Base64
+        const logoInput = document.getElementById('logoInput');
+        let logoBase64 = null;
+
+        if (logoInput && logoInput.files && logoInput.files[0]) {
+            try {
+                logoBase64 = await new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.onload = (e) => resolve(e.target.result);
+                    reader.onerror = reject;
+                    reader.readAsDataURL(logoInput.files[0]);
+                });
+            } catch (err) {
+                console.error("Error reading logo", err);
+            }
+        }
+
+        await generatePDF(data, template, logoBase64);
     });
 });
 
@@ -76,7 +91,7 @@ function activatePremiumUI() {
     }
 }
 
-async function generatePDF(data, template) {
+async function generatePDF(data, template, logoBase64 = null) {
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
 
@@ -110,14 +125,42 @@ async function generatePDF(data, template) {
     }
 
     doc.setTextColor(0, 0, 0);
+
+    // Logo Rendering (Top Center)
+    let yOffset = 40;
+    if (logoBase64) {
+        try {
+            // Add image (x, y, width, height). Aspect ratio is tricky without knowing image size, 
+            // but we can enforce a max width/height box.
+            const imgProps = doc.getImageProperties(logoBase64);
+            const maxWidth = 40;
+            const maxHeight = 25;
+            const ratio = imgProps.width / imgProps.height;
+
+            let w = maxWidth;
+            let h = w / ratio;
+
+            if (h > maxHeight) {
+                h = maxHeight;
+                w = h * ratio;
+            }
+
+            const x = (pageWidth - w) / 2;
+            doc.addImage(logoBase64, 'PNG', x, 10, w, h);
+            yOffset = 10 + h + 10; // Push title down
+        } catch (e) {
+            console.error("Failed to add image to PDF", e);
+        }
+    }
+
     doc.setFontSize(14);
     doc.setFont("helvetica", "bold");
-    doc.text(template.title, pageWidth / 2, 40, { align: "center" });
+    doc.text(template.title, pageWidth / 2, yOffset, { align: "center" });
 
     doc.setFontSize(12);
     doc.setFont("helvetica", "normal");
     const lines = doc.splitTextToSize(text, maxLineWidth);
-    doc.text(lines, margin, 60);
+    doc.text(lines, margin, yOffset + 20);
 
     const fileName = `procuracao_${data.nome.split(' ')[0].toLowerCase()}${isPremium ? '_premium' : ''}.pdf`;
     doc.save(fileName);

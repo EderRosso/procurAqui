@@ -1,21 +1,25 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>procurAqui - Gerador de Procuração Online Grátis e Rápido</title>
-    <meta name="description" content="Gere sua procuração em PDF pronta para imprimir em segundos. Modelos de procuração geral, específica, previdenciária e mais. Rápido, fácil e sem cadastro.">
+    <meta name="description"
+        content="Gere sua procuração em PDF pronta para imprimir em segundos. Modelos de procuração geral, específica, previdenciária e mais. Rápido, fácil e sem cadastro.">
     <link rel="stylesheet" href="css/style.css">
-    
+
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    
+
     <!-- jsPDF CDN -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    
+
     <!-- Favicon Mock -->
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚖️</text></svg>">
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚖️</text></svg>">
 </head>
+
 <body>
 
     <!-- Header -->
@@ -39,7 +43,8 @@
     <section class="hero">
         <div class="container">
             <h1>Gere sua Procuração em<br>Segundos, Pronto para Imprimir</h1>
-            <p>Esqueça a burocracia. Preencha os dados, escolha o modelo e baixe seu PDF formatado profissionalmente.</p>
+            <p>Esqueça a burocracia. Preencha os dados, escolha o modelo e baixe seu PDF formatado profissionalmente.
+            </p>
             <a href="#form-section" class="btn-primary">Começar Grátis</a>
         </div>
     </section>
@@ -52,14 +57,22 @@
                 <form id="procuracaoForm">
                     <div class="form-grid">
                         <div class="full-width">
-                            <h3 style="margin-bottom: 1rem; color: var(--primary-color);">Dados do Outorgante (Quem dá os poderes)</h3>
+                            <h3 style="margin-bottom: 1rem; color: var(--primary-color);">Personalização (Opcional)</h3>
+                            <div class="form-group">
+                                <label>Logotipo da Empresa/Advogado (Para cabeçalho do PDF)</label>
+                                <input type="file" id="logoInput" accept="image/*">
+                                <small style="color: #666;">Recomendado: Imagem PNG ou JPG transparente.</small>
+                            </div>
+                            <hr style="margin: 2rem 0; border: 0; border-top: 1px solid #eee;">
+                            <h3 style="margin-bottom: 1rem; color: var(--primary-color);">Dados do Outorgante (Quem dá
+                                os poderes)</h3>
                         </div>
-                        
+
                         <div class="form-group">
                             <label>Nome Completo</label>
                             <input type="text" name="nome" required placeholder="Ex: João da Silva">
                         </div>
-                        
+
                         <div class="form-group">
                             <label>Nacionalidade</label>
                             <input type="text" name="nacionalidade" value="Brasileiro(a)">
@@ -75,7 +88,7 @@
                                 <option value="União Estável">União Estável</option>
                             </select>
                         </div>
-                        
+
                         <div class="form-group">
                             <label>Profissão</label>
                             <input type="text" name="profissao" placeholder="Ex: Engenheiro">
@@ -85,28 +98,30 @@
                             <label>CPF</label>
                             <input type="text" name="cpf" required placeholder="000.000.000-00">
                         </div>
-                        
+
                         <div class="form-group">
                             <label>RG</label>
                             <input type="text" name="rg" required placeholder="00.000.000-0">
                         </div>
-                        
+
                         <div class="full-width form-group">
                             <label>Endereço Completo</label>
-                            <input type="text" name="endereco" required placeholder="Rua, Número, Bairro, Cidade - UF, CEP">
+                            <input type="text" name="endereco" required
+                                placeholder="Rua, Número, Bairro, Cidade - UF, CEP">
                         </div>
 
                         <!-- Outorgado -->
                         <div class="full-width">
                             <hr style="margin: 2rem 0; border: 0; border-top: 1px solid #eee;">
-                            <h3 style="margin-bottom: 1rem; color: var(--primary-color);">Dados do Procurador (Quem recebe os poderes)</h3>
+                            <h3 style="margin-bottom: 1rem; color: var(--primary-color);">Dados do Procurador (Quem
+                                recebe os poderes)</h3>
                         </div>
 
                         <div class="form-group">
                             <label>Nome Completo do Procurador</label>
                             <input type="text" name="nome_procurador" required>
                         </div>
-                        
+
                         <div class="form-group">
                             <label>Registro Profissional / OAB (Se houver)</label>
                             <input type="text" name="oab" placeholder="Ex: 123456 (ou deixe em branco)">
@@ -123,7 +138,7 @@
                         </div>
 
                         <!-- Powers -->
-                         <div class="full-width">
+                        <div class="full-width">
                             <hr style="margin: 2rem 0; border: 0; border-top: 1px solid #eee;">
                             <h3 style="margin-bottom: 1rem; color: var(--primary-color);">Detalhes da Procuração</h3>
                         </div>
@@ -145,12 +160,15 @@
 
                         <div class="full-width form-group">
                             <label>Poderes Específicos (Opcional - Adicione detalhes)</label>
-                            <textarea name="poderes_especificos" rows="3" placeholder="Ex: Poderes par vender o imóvel matrícula X, ou retirar diploma na universidade Y..."></textarea>
+                            <textarea name="poderes_especificos" rows="3"
+                                placeholder="Ex: Poderes par vender o imóvel matrícula X, ou retirar diploma na universidade Y..."></textarea>
                         </div>
 
                         <div class="full-width" style="text-align: center; margin-top: 1rem;">
-                            <button type="submit" id="generateBtn" class="btn-primary" style="width: 100%; font-size: 1.2rem;">BAIXAR PDF GRÁTIS</button>
-                            <p style="font-size: 0.8rem; margin-top: 0.5rem; color: #666;">Ao clicar, você concorda com nossos termos de uso.</p>
+                            <button type="submit" id="generateBtn" class="btn-primary"
+                                style="width: 100%; font-size: 1.2rem;">BAIXAR PDF GRÁTIS</button>
+                            <p style="font-size: 0.8rem; margin-top: 0.5rem; color: #666;">Ao clicar, você concorda com
+                                nossos termos de uso.</p>
                         </div>
                     </div>
                 </form>
@@ -187,7 +205,7 @@
         <div class="container">
             <h2>Precisa de algo mais profissional?</h2>
             <p>Remova a marca d'água e tenha acesso a suporte prioritário.</p>
-            
+
             <div class="premium-card">
                 <h3>Versão Profissional</h3>
                 <div class="price">R$ 4,90</div>
@@ -196,7 +214,8 @@
                     <li>✅ Formatação Premium</li>
                     <li>✅ Suporte Jurídico Básico</li>
                 </ul>
-                <button onclick="buyPremium()" class="btn-primary" style="background: var(--success); width: 100%;">Quero Sem Marca D'água</button>
+                <button onclick="buyPremium()" class="btn-primary"
+                    style="background: var(--success); width: 100%;">Quero Sem Marca D'água</button>
             </div>
         </div>
     </section>
@@ -215,4 +234,5 @@
     <script src="js/templates.js"></script>
     <script src="js/main.js"></script>
 </body>
+
 </html>
