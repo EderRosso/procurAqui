@@ -71,7 +71,8 @@ module.exports = async (req, res) => {
         const links = response.data.links || [];
         // For /checkouts, the link is usually 'PAY' or 'SELF' or specifically classified.
         // We look for any link that seems to be the redirect.
-        const paymentLink = links.find(l => l.rel === 'PAY' || l.rel === 'pay' || l.rel === 'SELF' || l.rel === 'self');
+        // Strictly look for PAY or checkout. Do NOT use SELF as it is the API endpoint.
+        const paymentLink = links.find(l => l.rel === 'PAY' || l.rel === 'pay' || l.rel === 'checkout');
 
         console.log("PagSeguro Checkout Response:", JSON.stringify(response.data, null, 2));
 
