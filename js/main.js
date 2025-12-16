@@ -74,18 +74,24 @@ function checkPaymentStatus() {
 function activatePremiumUI() {
     const premiumSection = document.getElementById('premium');
     const btn = document.getElementById('generateBtn');
+    const premiumFeatures = document.getElementById('premium-features');
 
     // Update Button
     btn.textContent = "BAIXAR PDF PREMIUM (SEM MARCA)";
     btn.style.background = "#10b981";
-    btn.innerHTML += " ✨";
+    if (!btn.textContent.includes("✨")) btn.innerHTML += " ✨";
+
+    // Show Premium Features (Logo Upload)
+    if (premiumFeatures) {
+        premiumFeatures.style.display = 'block';
+    }
 
     if (premiumSection) {
         premiumSection.innerHTML = `
             <div class="container" style="text-align:center; padding: 4rem 0;">
                 <div style="font-size: 4rem;">🎉</div>
                 <h2 style="color: #fff;">Premium Ativado!</h2>
-                <p style="color: #ccc;">Seus documentos agora são gerados sem marca d'água.</p>
+                <p style="color: #ccc;">Seus documentos agora são gerados sem marca d'água e com personalização.</p>
             </div>
         `;
     }
