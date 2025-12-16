@@ -148,7 +148,8 @@ async function buyPremium() {
             window.location.href = data.init_point;
         } else {
             console.error(data);
-            alert('Erro ao iniciar pagamento. Verifique o console.');
+            console.error(data);
+            alert('Erro: Link de pagamento não encontrado. Detalhes: ' + JSON.stringify(data, null, 2));
         }
     } catch (error) {
         console.error(error);

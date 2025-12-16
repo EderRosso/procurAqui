@@ -72,6 +72,8 @@ module.exports = async (req, res) => {
         const links = response.data.links || [];
         const paymentLink = links.find(l => l.rel === 'pay' || l.rel === 'checkout');
 
+        console.log("PagSeguro Response:", JSON.stringify(response.data, null, 2));
+
         return res.status(200).json({
             id: response.data.id,
             init_point: paymentLink ? paymentLink.href : null, // Mapped to maintain compatibility with frontend if possible
